@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 
+//lay API
 Future<List<Pokemon>> fetchPokemon() async {
   List<Pokemon> listPokemon = [];
-  Response res = await http.get(Uri.parse(
+  var res = await http.get(Uri.parse(
       'https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json'));
   // If the server did return a 200 OK response,
   if (res.statusCode == 200) {
@@ -14,7 +14,7 @@ Future<List<Pokemon>> fetchPokemon() async {
     for (var item in jsonObj) {
       listPokemon.add(Pokemon.fromJson(item));
     }
-    return listPokemon;
+    return listPokemon; // tra ve danh sach dang List<Pokemon>
   } else {
     throw Exception('Failed to load json');
   }

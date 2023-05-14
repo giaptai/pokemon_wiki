@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import '../shared/constants.dart';
+import '../shared/varcolors.dart';
 import 'list_pokemon.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-
   final TextEditingController _searchController = TextEditingController();
   String _searchByName = '';
+  String dropdownValue = "One";
+  List<String> types = [
+    'Grass',
+    'Bug',
+    'Water',
+    'Normal',
+    'Electric',
+    'Fire',
+    'Psychic',
+    'Fighting',
+    'Rock',
+    'Poison',
+    'Ice',
+  ];
   @override
   Widget build(BuildContext context) {
     var pwidth = MediaQuery.of(context).size.width;
@@ -17,31 +32,123 @@ class HomeScreen extends StatelessWidget {
         height: pheight,
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: TextField(
-                onSubmitted: (value) {
-                  _searchByName = value;
-                },
-                keyboardType: TextInputType.text,
-                controller: _searchController,
-                decoration: InputDecoration(
-                    // focusedBorder: Is activated when we click/focus on the TextField.
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 0),
-                      borderRadius: BorderRadius.circular(25),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: TextField(
+                      onSubmitted: (value) {
+                        _searchByName = value;
+                      },
+                      keyboardType: TextInputType.text,
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                          // focusedBorder: Is activated when we click/focus on the TextField.
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 0),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 0),
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          hintText: 'Tìm kiếm',
+                          prefixIcon: const Icon(Icons.search_rounded),
+                          prefixIconColor: Colors.black),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide: BorderSide(color: Colors.white, width: 0),
+                  ),
+                ),
+                TextButton(
+                    style: TextButton.styleFrom(
+                      // backgroundColor: Colors.white,
+                      foregroundColor: Colors.red,
                     ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                    hintText: 'Tìm kiếm',
-                    prefixIcon: const Icon(Icons.search_rounded),
-                    prefixIconColor: Colors.black),
-              ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: Column(
+                              children: [
+                                Column(
+                                  children: [
+                                    const Text('TYPES'),
+                                    Wrap(
+                                      children: [
+                                        for (var type in types)
+                                          TextButton(
+                                              onPressed: () => null,
+                                              style: TextButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                              ),
+                                              child:
+                                                  Constants.btntagType(type)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    const Text('HEIGHTS'),
+                                    Wrap(
+                                      children: [],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    const Text('WEIGHTS'),
+                                    Wrap(
+                                      children: [],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              TextButton(
+                                child: Text('Cancel'),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                              TextButton(
+                                child: Text('Ok'),
+                                onPressed: () => null,
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: const Text('Lọc')),
+                // DropdownButton<String>(
+                //   value: dropdownValue,
+                //   onChanged: (value) {
+                //     print(value);
+                //   },
+                //   items: <String>['One', 'Two', 'Three', 'Four']
+                //       .map<DropdownMenuItem<String>>((String value) {
+                //     return DropdownMenuItem<String>(
+                //       value: value,
+                //       child: TextButton(
+                //           style: TextButton.styleFrom(
+                //             // backgroundColor: Colors.white,
+                //             foregroundColor: Colors.red,
+                //           ),
+                //           onPressed: () => null,
+                //           child: Text(value)),
+                //     );
+                //   }).toList(),
+                // ),
+              ],
             ),
+
+            //đây là statefullwidget, dùng để hiện danh sách Pokemon theo tìm kiếm hoặc hiện tất cả.
             ListPokemon(
               searchByName: _searchByName,
               pheight: pheight,
