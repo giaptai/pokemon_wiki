@@ -3,14 +3,13 @@ import 'package:pokemon_wiki/widgets/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     var pwidth = MediaQuery.of(context).size.width;
     var pheight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage('assets/images/login_pokemon.png'))),
@@ -21,7 +20,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Pokemon Wiki',
                 style: TextStyle(
                   letterSpacing: 2,
@@ -37,12 +36,13 @@ class LoginScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(6.0),
                   ),
                   onPressed: () {
+                    //tao sự kiện qua screen mới
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => HomeScreen()),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'KHÁM PHÁ THÔI !',
                     style: TextStyle(
                       fontSize: 28,

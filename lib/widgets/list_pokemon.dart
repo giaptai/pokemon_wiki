@@ -3,8 +3,8 @@ import '../classes/pokemon.dart';
 import '../shared/constants.dart';
 
 class ListPokemon extends StatefulWidget {
-  ListPokemon({super.key, required this.searchByName, required this.pheight});
-  final String searchByName;
+  const ListPokemon({super.key, required this.searchByName, required this.pheight});
+  final String searchByName; //inout tìm kiếm
   final double pheight;
   @override
   State<ListPokemon> createState() => _ListPokemonState();
@@ -13,6 +13,7 @@ class ListPokemon extends StatefulWidget {
 class _ListPokemonState extends State<ListPokemon> {
   late Future<List<Pokemon>> futurePokemon;
 
+  //tìm kiếm pokemon
   Future<List<Pokemon>> searchPokemon(String name) async {
     //neu xai asyn voi await luc nay no tra ve list<Pokemon> chu khong phai ham Future<List<Pokemon>>
     // List<Pokemon> tempList = (await fetchPokemon()).where((element) => false).toList();
@@ -29,6 +30,7 @@ class _ListPokemonState extends State<ListPokemon> {
     return filterList;
   }
 
+// cái này chạy trước hàm build()
   @override
   void initState() {
     super.initState();
@@ -59,6 +61,7 @@ class _ListPokemonState extends State<ListPokemon> {
                 shrinkWrap: true,
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
+                  //lấy chi tiết cụ thể 1 pokemon, hàm này ở file constants.dart tên cardPokemon
                   return Constants.cardPokemon(snapshot.data![index], context);
                 }),
           );

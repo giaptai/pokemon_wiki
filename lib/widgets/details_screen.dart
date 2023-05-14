@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_wiki/classes/pokemon.dart';
 import '../shared/constants.dart';
+import '../shared/varcolors.dart';
 
 class DetailsScreen extends StatelessWidget {
-  DetailsScreen({Key? key, required this.poke}) : super(key: key);
+  const DetailsScreen({Key? key, required this.poke}) : super(key: key);
   final Pokemon poke;
   @override
   Widget build(BuildContext context) {
@@ -13,13 +14,13 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          backgroundColor: Constants.bgDetails.withOpacity(0),
+          backgroundColor: bgDetails.withOpacity(0),
           elevation: 0,
         ),
         body: Container(
           width: pwidth,
           height: pheight,
-          color: Constants.bgDetails,
+          color: bgDetails,
           // padding: EdgeInsets.all(8.0),
           child: Stack(
             alignment: Alignment.center,
@@ -39,7 +40,7 @@ class DetailsScreen extends StatelessWidget {
                     const SizedBox(height: 80),
                     Text(
                       'Number: ${poke.num}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           letterSpacing: 1,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
@@ -47,7 +48,7 @@ class DetailsScreen extends StatelessWidget {
                     const SizedBox(height: 14),
                     Text(
                       'Height: ${poke.height}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           letterSpacing: 1,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
@@ -55,7 +56,7 @@ class DetailsScreen extends StatelessWidget {
                     const SizedBox(height: 14),
                     Text(
                       'Weight: ${poke.weight}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           letterSpacing: 1,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
@@ -68,7 +69,7 @@ class DetailsScreen extends StatelessWidget {
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             for (var type in poke.types)
-                              Constants.btntagType(type, Constants.grass),
+                              Constants.btntagType(type),
                           ],
                         ),
                       ],
@@ -81,10 +82,7 @@ class DetailsScreen extends StatelessWidget {
                           direction: Axis.horizontal,
                           verticalDirection: VerticalDirection.down,
                           crossAxisAlignment: WrapCrossAlignment.center,
-                          children: (poke.weaknesses)
-                              .map((e) =>
-                                  Constants.btntagType(e, Constants.fire))
-                              .toList(),
+                          children: (poke.weaknesses).map((e) => Constants.btntagType(e)).toList(),
                         ),
                       ],
                     ),
@@ -96,10 +94,9 @@ class DetailsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Image.network(
+                      scale: 0.75,
                       poke.img,
                       filterQuality: FilterQuality.low,
-                      // height: pheight * 0.25,
-                      // width: pheight * 0.25,
                       fit: BoxFit.contain,
                       frameBuilder:
                           (context, image, frame, wasSynchronouslyLoaded) {
@@ -109,11 +106,12 @@ class DetailsScreen extends StatelessWidget {
                         }
                         return image;
                       },
-                      errorBuilder: (_, __, ___) => const Center(child: Text('Error !')),
+                      errorBuilder: (_, __, ___) =>
+                          const Center(child: Text('Error !')),
                     ),
                     Text(
                       poke.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           letterSpacing: 1.5,
                           fontSize: 23,
                           fontWeight: FontWeight.bold),
